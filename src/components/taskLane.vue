@@ -1,7 +1,18 @@
 <template>
     <div>
         <div class="card mb-3" :class="bgColor" style="min-height:250px">
-            <h5 class="card-header text-white text-center">{{ title }}</h5>
+
+            <!-- <div> -->
+                <!-- <div class="card-header text-white text-center"><h5 class="text-white">{{ title }}</h5></div> -->
+                <!-- <h5 class="card-header text-white text-center">{{ title }}</h5> -->
+
+                <!-- <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" /> -->
+            <!-- </div> -->
+
+            <div class="card-header text-center" style="justify-content:space-between">
+                <h5 class="text-white">{{ title }}</h5>
+                <span><font-awesome-icon icon="fa-solid fa-ellipsis-vertical" /></span>
+            </div>
             <div class="card-body">
                 <button type="button" @click="addCard()" class="btn addCardBtn" :class="btnColor"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ml-1">Add a Card</span></button>
                 <draggable :options="{ group: 'default' }">
