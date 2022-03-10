@@ -34,6 +34,10 @@ export default ({
   background: #eaeef1;
 }
 
+.card.task-lane-item:hover {
+    cursor: pointer;
+}
+
 .deleteCardIcon:hover{
     cursor: pointer;
 }
