@@ -1,6 +1,7 @@
 <template>
   <div class="m-4">
-      <!-- <button type="button" class="btn btn-info"><span><font-awesome-icon icon="fa-solid fa-plus" /></span>New Board</button> -->
+
+    <!-- Board Name -->
     <div class="d-flex">
         <span>
             <h2 class="boardNameClass" v-if="!isEditingBN"><strong>{{boardName}}</strong></h2>
@@ -9,23 +10,25 @@
         </span>
 
         <span class="mt-2 ms-3">
-            <font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBN" @click="editBoardName" class="editBoardClass" />
-            <font-awesome-icon icon="fa-solid fa-check"  v-if="isEditingBN" @click="stopEditBoardName" class="editBoardClass" style="color:#78c2ad"/>
+            <font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBN" @click="editBoardName()" class="editBoardClass" />
+            <font-awesome-icon icon="fa-solid fa-check"  v-if="isEditingBN" @click="stopEditBoardName()" class="editBoardClass" style="color:#78c2ad"/>
         </span>
     </div>
 
+    <!-- Board Description -->
     <div class="d-flex mb-3">
       <span>
           <div class="boardNameClass" v-if="!isEditingBD">{{boardDesc}}</div>
-          <textarea v-if="isEditingBD" v-model="boardDesc" class="form-control" @keydown.enter="stopEditBoardDesc"></textarea>
+          <textarea v-if="isEditingBD" v-model="boardDesc" class="form-control" @keydown.enter="stopEditBoardDesc()"></textarea>
       </span>
 
       <span class="ms-3">
-            <span><font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBD" @click="editBoardDesc" class="editBoardClass" /></span>
-            <font-awesome-icon icon="fa-solid fa-check" v-if="isEditingBD" @click="stopEditBoardDesc" class="editBoardClass" style="color:#78c2ad"/>
+            <span><font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBD" @click="editBoardDesc()" class="editBoardClass" /></span>
+            <font-awesome-icon icon="fa-solid fa-check" v-if="isEditingBD" @click="stopEditBoardDesc()" class="editBoardClass" style="color:#78c2ad"/>
         </span>
     </div>
     
+    <!-- Tasklanes -->
     <div class="row">
     
         <div class="col">
@@ -76,7 +79,10 @@ export default {
     },
 
     stopEditBoardName() {
-        this.isEditingBN = false
+      this.isEditingBN = false
+      this.$store.commit('editBoardName', {
+          text: {boardId: this.boardId, boardName: this.boardName}
+      })
     },
 
     editBoardDesc() {
@@ -84,7 +90,10 @@ export default {
     },
 
     stopEditBoardDesc() {
-        this.isEditingBD = false
+      this.isEditingBD = false
+       this.$store.commit('editBoardDesc', {
+        text: {boardId: this.boardId, boardDesc: this.boardDesc}
+      })
     }
   }
 }

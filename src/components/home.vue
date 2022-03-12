@@ -96,6 +96,7 @@
 
 <script>
 import board from './board.vue'
+import { mapState } from 'vuex'; 
 
 export default {
   name: 'home',
@@ -110,10 +111,13 @@ export default {
       newBoardDesc: '',
       showSideNav: false,
       currBoardId: -1,
-      currBoard: {},
-      allBoardsList: []
+      currBoard: {}
     }
   },
+
+  computed: mapState({
+    allBoardsList: s => s.allBoards
+  }),
 
   methods: {
     openSideNav(){
@@ -132,8 +136,8 @@ export default {
       // console.log(current)
       // var newBoardId = current.getFullYear() + "/" + current.getMonth() + "/" + current.getDate() + ","
       this.currBoardId += 1
-      this.allBoardsList.push({boardName: this.newBoardName, boardDesc: this.newBoardDesc, boardId: this.currBoardId})
-      console.log(this.allBoardsList)
+      // this.allBoardsList.push({boardName: this.newBoardName, boardDesc: this.newBoardDesc, boardId: this.currBoardId})
+      // console.log(this.allBoardsList)
 
       if(this.newBoardName && this.newBoardDesc){
         this.$store.commit('addBoard', {
@@ -142,6 +146,15 @@ export default {
       }
       this.newBoardName = ''
       this.newBoardDesc = ''
+
+      for(var board of this.allBoardsList){
+        if(board.boardId == this.currBoardId){
+          this.currBoard = board
+          break
+        } 
+      }
+      this.showSideNav = false
+
     },
 
     closeNewBoard(){

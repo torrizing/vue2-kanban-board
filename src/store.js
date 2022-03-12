@@ -48,11 +48,30 @@ export default new Vuex.Store({
         if(eachBoard.boardId == item.text.boardId){
           eachBoard.allItems[item.text.laneId].items.push({title: item.text.newCardTitle, description: item.text.newCardDesc, itemId: eachBoard.nextId})
           eachBoard.nextId += 1
+          break;
         }
       }
 
       console.log("After:" , state)
 
+    },
+
+    editBoardName(state,item){
+      for(var eachBoard of state.allBoards){
+        if(eachBoard.boardId == item.text.boardId){
+          eachBoard.boardName = item.text.boardName
+          break;
+        }
+      }
+    },
+
+    editBoardDesc(state,item){
+      for(var eachBoard of state.allBoards){
+        if(eachBoard.boardId == item.text.boardId){
+          eachBoard.boardDesc = item.text.boardDesc
+          break;
+        }
+      }
     }
   }
 })
