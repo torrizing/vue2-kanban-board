@@ -67,9 +67,25 @@ export default new Vuex.Store({
           break; 
         }
       }
-      // console.log(state.allBoards.allBoardsList.allItems[laneId].items)
+    },
 
-      // state.allBoards.allBoardsList.allItems[laneId].items = details.items;
+    deleteItem(state, item){
+      console.log(item)
+      for(var eachBoard of state.allBoards.allBoardsList){
+        if(eachBoard.boardId == item.boardId){
+          var laneItems = eachBoard.allItems[item.laneId].items
+          for(var eachItem of laneItems){
+            if(eachItem.itemId == item.itemId){
+              // console.log(eachItem)
+              console.log('Before deleteItem:', laneItems)
+              var itemIndex = laneItems.indexOf(eachItem)
+              // console.log(itemIndex)
+              laneItems.splice(itemIndex, 1)
+              console.log('After deleteItem:', laneItems)
+            }
+          }
+        }
+      }
     },
 
     editBoardName(state,item){

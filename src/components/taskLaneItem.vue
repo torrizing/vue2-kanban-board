@@ -19,11 +19,15 @@
 
 export default ({
     name: 'taskLaneItem',
-    props: ['item'],
+    props: ['item', 'laneId', 'boardId'],
 
     methods: {
         deleteCard(){
-            
+            this.$store.commit('deleteItem', {
+                    itemId: this.item.itemId,
+                    laneId: this.laneId,
+                    boardId: this.boardId
+            });
         }
     }
 })
