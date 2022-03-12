@@ -9,9 +9,9 @@
                 <!-- <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" /> -->
             <!-- </div> -->
 
-            <div class="card-header text-center" style="justify-content:space-between">
-                <h5 class="text-white">{{ title }}</h5>
-                <span><font-awesome-icon icon="fa-solid fa-ellipsis-vertical" /></span>
+            <div class="card-header text-center">
+                <h5 class="text-white">{{ title }} <font-awesome-icon class="" icon="fa-solid fa-ellipsis-vertical" /></h5>
+                <!-- <span><font-awesome-icon icon="fa-solid fa-ellipsis-vertical" /></span> -->
             </div>
             <div class="card-body">
                 <button type="button" @click="addCard()" class="btn addCardBtn" :class="btnColor"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ml-1">Add a Card</span></button>

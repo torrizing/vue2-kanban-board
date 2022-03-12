@@ -8,9 +8,9 @@
             <span class="input" role="textbox"></span>
         </span>
 
-        <span class="mt-2 ml-3">
-            <span><font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBN" @click="editBoardName" class="editBoardClass" /></span>
-            <font-awesome-icon icon="fa-solid fa-check"  v-if="isEditingBN" @click="stopEditBoardName" class="editBoardClass" style="color:green"/>
+        <span class="mt-2 ms-3">
+            <font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBN" @click="editBoardName" class="editBoardClass" />
+            <font-awesome-icon icon="fa-solid fa-check"  v-if="isEditingBN" @click="stopEditBoardName" class="editBoardClass" style="color:#78c2ad"/>
         </span>
     </div>
 
@@ -20,9 +20,9 @@
           <textarea v-if="isEditingBD" v-model="boardDesc" class="form-control" @keydown.enter="stopEditBoardDesc"></textarea>
       </span>
 
-      <span class="mt-2 ml-3">
+      <span class="mt-2 ms-3">
             <span><font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBD" @click="editBoardDesc" class="editBoardClass" /></span>
-            <font-awesome-icon icon="fa-solid fa-check" v-if="isEditingBD" @click="stopEditBoardDesc" class="editBoardClass" style="color:green"/>
+            <font-awesome-icon icon="fa-solid fa-check" v-if="isEditingBD" @click="stopEditBoardDesc" class="editBoardClass" style="color:#78c2ad"/>
         </span>
     </div>
     
@@ -55,11 +55,10 @@ export default {
     // draggable,
     taskLane
   },
-
+  props: ['boardName', 'boardDesc'],
   data () {
     return {
-      boardName: 'First Board',
-      boardDesc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est dicta odit molestiae nihil neque. Veniam quas esse alias ipsam minus soluta assumenda similique exercitationem quae! Pariatur unde odio consectetur nemo.",
+      
       isEditingBN: false,
       isEditingBD: false,
       todoItems: [{title:'Cook', description:'2 pax dinner'},
@@ -90,7 +89,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 
 .editBoardClass:hover {

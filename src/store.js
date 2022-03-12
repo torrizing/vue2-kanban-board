@@ -5,10 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    items: {
-      todo: [],
-      progress: [],
-      done: []
+    allBoards: {
+      board: [{boardId: -1, boardName:'', boardDesc:'', allItems: {todoItems: [], progressItems: [], doneItems: []}}],
     },
     nextId: 1
   },
