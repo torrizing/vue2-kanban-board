@@ -9,7 +9,7 @@
       <div style="display:flex;" class="mb-3">
         <span><strong>My Boards</strong></span>
         
-        <span style="margin-left:auto;"> <font-awesome-icon class="addNewBoardIcon" icon="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#exampleModal"/></span>
+        <span style="margin-left:auto;"> <font-awesome-icon class="addNewBoardIcon" icon="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#newBoardModal"/></span>
       </div>
 
       <div>
@@ -53,7 +53,7 @@
     </nav>  
 
      <!-- Create New Board Dialog -->
-    <div class="modal" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal" id="newBoardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -83,11 +83,11 @@
     </div>
 
     <div v-if="allBoardsList.length == 0" class="text-center mt-5">
-      <h3>Welcome!<br><br> You currently do not have any boards, go ahead and <span class="createFirstBoard" data-bs-toggle="modal" data-bs-target="#exampleModal">create your first board</span> :)</h3>
+      <h3>Welcome!<br><br> You currently do not have any boards, go ahead and <span class="createFirstBoard" data-bs-toggle="modal" data-bs-target="#newBoardModal">create your first board</span> :)</h3>
     </div>
 
     <div v-else>
-      <board :boardName="currBoard.boardName" :boardDesc="currBoard.boardDesc"></board>
+      <board :boardName="currBoard.boardName" :boardDesc="currBoard.boardDesc" :boardId="currBoard.boardId"></board>
       <!-- {boardName: 'First Board', boardDesc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est dicta odit molestiae nihil neque. Veniam quas esse alias ipsam minus soluta assumenda similique exercitationem quae! Pariatur unde odio consectetur nemo.', boardId: -1} -->
     </div>
     
@@ -125,7 +125,6 @@ export default {
     },
 
     createNewBoard(){
-      // Create New Board
       console.log(this.newBoardName)
       console.log(this.newBoardDesc)
 
@@ -135,6 +134,12 @@ export default {
       this.currBoardId += 1
       this.allBoardsList.push({boardName: this.newBoardName, boardDesc: this.newBoardDesc, boardId: this.currBoardId})
       console.log(this.allBoardsList)
+
+      if(this.newBoardName && this.newBoardDesc){
+        this.$store.commit('addBoard', {
+            text: {boardId: this.currBoardId, boardName: this.newBoardName, boardDesc: this.newBoardDesc},
+        })
+      }
       this.newBoardName = ''
       this.newBoardDesc = ''
     },

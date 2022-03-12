@@ -20,7 +20,7 @@
           <textarea v-if="isEditingBD" v-model="boardDesc" class="form-control" @keydown.enter="stopEditBoardDesc"></textarea>
       </span>
 
-      <span class="mt-2 ms-3">
+      <span class="ms-3">
             <span><font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBD" @click="editBoardDesc" class="editBoardClass" /></span>
             <font-awesome-icon icon="fa-solid fa-check" v-if="isEditingBD" @click="stopEditBoardDesc" class="editBoardClass" style="color:#78c2ad"/>
         </span>
@@ -29,15 +29,15 @@
     <div class="row">
     
         <div class="col">
-            <taskLane id="todo" title="To-Do" bgColor="bg-info" btnColor="btn-info" :items="todoItems"></taskLane>
+            <taskLane laneId="todo" title="To-Do" bgColor="bg-info" btnColor="btn-info" :items="todoItems" :boardId="boardId"></taskLane>
         </div>
 
         <div class="col">
-            <taskLane id="progress" title="In Progress" bgColor="bg-warning" btnColor="btn-warning" :items="progressItems"></taskLane>
+            <taskLane laneId="progress" title="In Progress" bgColor="bg-warning" btnColor="btn-warning" :items="progressItems" :boardId="boardId"></taskLane>
         </div>
 
         <div class="col">
-            <taskLane id="done" title="Done" bgColor="bg-primary" btnColor="btn-primary" :items="doneItems"></taskLane>
+            <taskLane laneId="done" title="Done" bgColor="bg-primary" btnColor="btn-primary" :items="doneItems" :boardId="boardId"></taskLane>
         </div>
 
     </div>
@@ -55,14 +55,15 @@ export default {
     // draggable,
     taskLane
   },
-  props: ['boardName', 'boardDesc'],
+  props: ['boardName', 'boardDesc', 'boardId'],
   data () {
     return {
       
       isEditingBN: false,
       isEditingBD: false,
-      todoItems: [{title:'Cook', description:'2 pax dinner'},
-      {title:'Clean', description:'Sweep the floor'}],
+      // todoItems: [{title:'Cook', description:'2 pax dinner'},
+      // {title:'Clean', description:'Sweep the floor'}],
+      todoItems: [],
       progressItems: [],
       doneItems: []
     }
