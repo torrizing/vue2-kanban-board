@@ -32,15 +32,15 @@
     <div class="row">
     
         <div class="col">
-            <taskLane laneId="todo" title="To-Do" bgColor="bg-info" btnColor="btn-info" :items="todoItems" :boardId="boardId"></taskLane>
+            <taskLane laneId="todo" title="To-Do" bgColor="bg-info" btnColor="btn-info" :laneDetails="allItems.todo" :boardId="boardId"></taskLane>
         </div>
 
         <div class="col">
-            <taskLane laneId="progress" title="In Progress" bgColor="bg-warning" btnColor="btn-warning" :items="progressItems" :boardId="boardId"></taskLane>
+            <taskLane laneId="progress" title="In Progress" bgColor="bg-warning" btnColor="btn-warning" :laneDetails="allItems.progress" :boardId="boardId"></taskLane>
         </div>
 
         <div class="col">
-            <taskLane laneId="done" title="Done" bgColor="bg-primary" btnColor="btn-primary" :items="doneItems" :boardId="boardId"></taskLane>
+            <taskLane laneId="done" title="Done" bgColor="bg-primary" btnColor="btn-primary" :laneDetails="allItems.done" :boardId="boardId"></taskLane>
         </div>
 
     </div>
@@ -58,17 +58,16 @@ export default {
     // draggable,
     taskLane
   },
-  props: ['boardName', 'boardDesc', 'boardId'],
+  props: ['boardName', 'boardDesc', 'boardId', 'allItems'],
   data () {
     return {
-      
       isEditingBN: false,
       isEditingBD: false,
       // todoItems: [{title:'Cook', description:'2 pax dinner'},
       // {title:'Clean', description:'Sweep the floor'}],
-      todoItems: [],
-      progressItems: [],
-      doneItems: []
+      // todoItems: [],
+      // progressItems: [],
+      // doneItems: []
     }
   },
 
@@ -91,7 +90,7 @@ export default {
 
     stopEditBoardDesc() {
       this.isEditingBD = false
-       this.$store.commit('editBoardDesc', {
+      this.$store.commit('editBoardDesc', {
         text: {boardId: this.boardId, boardDesc: this.boardDesc}
       })
     }

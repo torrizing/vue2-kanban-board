@@ -13,8 +13,8 @@
                 <button type="button" class="btn addCardBtn" :class="btnColor" data-bs-toggle="modal" data-bs-target="#addCardModal" @click="addNewCard(laneId)"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ms-1">Add a Card</span></button>
                 
                 <!-- Each Card Item -->
-                <draggable :options="{ group: 'default' }">
-                    <div v-for="item in items" :key="item.id">
+                <draggable :options="{ group: 'default' }" @change="dragItem()" >
+                    <div v-for="item of laneDetails.items" :key="item.itemId">
                         <taskLaneItem :item="item"></taskLaneItem>
                     </div>
                 </draggable>
@@ -69,7 +69,8 @@ export default ({
         taskLaneItem
     },
 
-    props: ['items', 'title', 'laneId', 'bgColor', 'btnColor', 'boardId'],
+
+    props: ['laneDetails', 'title', 'laneId', 'bgColor', 'btnColor', 'boardId'],
 
     data() {
         return {
@@ -78,9 +79,24 @@ export default ({
         }
     },
 
+    computed: {
+        draggables: {
+            get() {
+                return this.laneDetails.items;
+            },
+            set(laneDetails) {
+                console.log(laneDetails)
+                this.$store.commit('updateItems', {
+                    laneDetails
+                });
+            }
+        }
+    },
+
     methods: {
         addNewCard(laneId){
             console.log(laneId)
+            console.log(this.laneDetails)
         },
 
         createNewCard() {
@@ -98,7 +114,10 @@ export default ({
         closeNewCard(){
             this.newCardTitle = ''
             this.newCardDesc = ''
+        },
 
+        dragItem(){
+            console.log('hi')
         }
 
 

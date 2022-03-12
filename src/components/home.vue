@@ -13,7 +13,7 @@
       </div>
 
       <div>
-        <div v-for="eachBoard in allBoardsList" :key="eachBoard.boardI" class="eachBoardClass mb-2" @click="accessBoard(eachBoard)">{{eachBoard.boardName}}</div>
+        <div v-for="eachBoard of allBoardsList" :key="eachBoard.boardId" class="eachBoardClass mb-2" @click="accessBoard(eachBoard)">{{eachBoard.boardName}}</div>
       </div>
     </div>
 
@@ -87,7 +87,7 @@
     </div>
 
     <div v-else>
-      <board :boardName="currBoard.boardName" :boardDesc="currBoard.boardDesc" :boardId="currBoard.boardId"></board>
+      <board :boardName="currBoard.boardName" :boardDesc="currBoard.boardDesc" :boardId="currBoard.boardId" :allItems="currBoard.allItems"></board>
       <!-- {boardName: 'First Board', boardDesc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est dicta odit molestiae nihil neque. Veniam quas esse alias ipsam minus soluta assumenda similique exercitationem quae! Pariatur unde odio consectetur nemo.', boardId: -1} -->
     </div>
     
@@ -116,7 +116,7 @@ export default {
   },
 
   computed: mapState({
-    allBoardsList: s => s.allBoards
+    allBoardsList: s => s.allBoards.allBoardsList
   }),
 
   methods: {
