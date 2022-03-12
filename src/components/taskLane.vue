@@ -13,8 +13,8 @@
                 <button type="button" class="btn addCardBtn" :class="btnColor" data-bs-toggle="modal" data-bs-target="#addCardModal" @click="addNewCard(laneId)"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ms-1">Add a Card</span></button>
                 
                 <!-- Each Card Item -->
-                <draggable :options="{ group: 'default' }" @change="dragItem()" >
-                    <div v-for="item of laneDetails.items" :key="item.itemId">
+                <draggable :options="{ group: 'default' }" @change="dragItem()" v-model="draggableItems">
+                    <div v-for="item of items" :key="item.itemId">
                         <taskLaneItem :item="item"></taskLaneItem>
                     </div>
                 </draggable>
@@ -70,7 +70,7 @@ export default ({
     },
 
 
-    props: ['laneDetails', 'title', 'laneId', 'bgColor', 'btnColor', 'boardId'],
+    props: ['items', 'title', 'laneId', 'bgColor', 'btnColor', 'boardId'],
 
     data() {
         return {
@@ -80,14 +80,16 @@ export default ({
     },
 
     computed: {
-        draggables: {
+        draggableItems: {
             get() {
-                return this.laneDetails.items;
+                return this.items;
             },
-            set(laneDetails) {
-                console.log(laneDetails)
+            set(items) {
+                console.log(items)
                 this.$store.commit('updateItems', {
-                    laneDetails
+                    items,
+                    laneId: this.laneId,
+                    boardId: this.boardId
                 });
             }
         }

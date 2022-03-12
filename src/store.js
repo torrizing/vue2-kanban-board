@@ -6,17 +6,18 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     allBoards: {
-        // {
-        //   boardId: -1, 
-        //   boardName:'', 
-        //   boardDesc:'', 
-        //   nextId: 0,
-        //   allItems: {
-        //     todo: {maxCard: 5, items: [{title: '', description: '', itemId: -1}]}, 
-        //     progress: {maxCard: 5, items: [{title: '', description: '', itemId: -1}]}, 
-        //     done: {maxCard: 5, items: [{title: '', description: '', itemId: -1}]}}
-        // }
-        allBoardsList: [],
+        
+        allBoardsList: [
+          // {
+          //   boardId: -1, 
+          //   boardName:'', 
+          //   boardDesc:'', 
+          //   allItems: {
+          //     todo: {maxCard: 5, items: [{title: '', description: '', itemId: -1}]}, 
+          //     progress: {maxCard: 5, items: [{title: '', description: '', itemId: -1}]}, 
+          //     done: {maxCard: 5, items: [{title: '', description: '', itemId: -1}]}}
+          // }
+        ],
         nextId: 0
     }
   },
@@ -48,15 +49,27 @@ export default new Vuex.Store({
         if(eachBoard.boardId == item.text.boardId){
           eachBoard.allItems[item.text.laneId].items.push({title: item.text.newCardTitle, description: item.text.newCardDesc, itemId: state.allBoards.nextId})
           state.allBoards.nextId += 1
-          break;
+          break; 
         }
       }
       console.log("After:" , state)
     },
 
-    updateItems(state, item){
-      console.log(state)
-      console.log("updateItems:", item)
+    updateItems(state, details){
+      console.log("laneId:", details.laneId)
+      console.log("updateItems:", details.items)
+
+      for(var eachBoard of state.allBoards.allBoardsList){
+        if(eachBoard.boardId == details.boardId){
+          
+          console.log(eachBoard.allItems[details.laneId].items)
+          eachBoard.allItems[details.laneId].items = details.items;
+          break; 
+        }
+      }
+      // console.log(state.allBoards.allBoardsList.allItems[laneId].items)
+
+      // state.allBoards.allBoardsList.allItems[laneId].items = details.items;
     },
 
     editBoardName(state,item){

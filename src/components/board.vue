@@ -32,15 +32,15 @@
     <div class="row">
     
         <div class="col">
-            <taskLane laneId="todo" title="To-Do" bgColor="bg-info" btnColor="btn-info" :laneDetails="allItems.todo" :boardId="boardId"></taskLane>
+            <taskLane laneId="todo" title="To-Do" bgColor="bg-info" btnColor="btn-info" :items="allItems.todo.items" :boardId="boardId"></taskLane>
         </div>
 
         <div class="col">
-            <taskLane laneId="progress" title="In Progress" bgColor="bg-warning" btnColor="btn-warning" :laneDetails="allItems.progress" :boardId="boardId"></taskLane>
+            <taskLane laneId="progress" title="In Progress" bgColor="bg-warning" btnColor="btn-warning" :items="allItems.progress.items" :boardId="boardId"></taskLane>
         </div>
 
         <div class="col">
-            <taskLane laneId="done" title="Done" bgColor="bg-primary" btnColor="btn-primary" :laneDetails="allItems.done" :boardId="boardId"></taskLane>
+            <taskLane laneId="done" title="Done" bgColor="bg-primary" btnColor="btn-primary" :items="allItems.done.items" :boardId="boardId"></taskLane>
         </div>
 
     </div>
