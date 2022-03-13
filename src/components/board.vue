@@ -32,15 +32,15 @@
     <div class="row">
     
         <div class="col">
-            <taskLane laneId="todo" title="To-Do" bgColor="bg-info" btnColor="btn-info" :items="allItems.todo.items" :boardId="boardId"></taskLane>
+            <taskLane laneId="todo" title="To-Do" bgColor="bg-info" btnColor="btn-info" :items="allItems.todo.items" :maxCard="allItems.todo.maxCard" :boardId="boardId"></taskLane>
         </div>
 
         <div class="col">
-            <taskLane laneId="progress" title="In Progress" bgColor="bg-warning" btnColor="btn-warning" :items="allItems.progress.items" :boardId="boardId"></taskLane>
+            <taskLane laneId="progress" title="In Progress" bgColor="bg-warning" btnColor="btn-warning" :items="allItems.progress.items" :maxCard="allItems.progress.maxCard" :boardId="boardId"></taskLane>
         </div>
 
         <div class="col">
-            <taskLane laneId="done" title="Done" bgColor="bg-primary" btnColor="btn-primary" :items="allItems.done.items" :boardId="boardId"></taskLane>
+            <taskLane laneId="done" title="Done" bgColor="bg-primary" btnColor="btn-primary" :items="allItems.done.items" :maxCard="allItems.done.maxCard" :boardId="boardId"></taskLane>
         </div>
 
     </div>
@@ -70,6 +70,21 @@ export default {
       // doneItems: []
     }
   },
+
+  // computed: {
+  //   boardName: {
+  //     get(){
+  //       this.boardName
+  //     },
+  //     set(boardName) {
+  //       console.log(boardName)
+  //       this.$store.commit('editBoardName', {
+  //           text: {boardId: this.boardId, boardName: this.boardName}
+  //       });
+  //     }
+  //   }
+
+  // },
 
   methods: {
 

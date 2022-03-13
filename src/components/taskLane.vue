@@ -5,28 +5,55 @@
             <div class="card-header d-flex">
                 <h5 class="text-white mt-2">{{ title }}</h5>
                 <!-- <span style="margin-left:auto" class="text-white mt-2 editCardIcon"><font-awesome-icon icon="fa-solid fa-ellipsis" /></span> -->
-                <button type="button" class="btn editCard" style="margin-left:auto"><font-awesome-icon icon="fa-solid fa-ellipsis" /></button>
+                <button type="button" class="btn editCardClass" style="margin-left:auto" data-bs-toggle="modal" data-bs-target="#editCardModal"><font-awesome-icon icon="fa-solid fa-ellipsis" /></button>
+                <!-- <button type="button" class="btn btn-secondary" title="" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-bs-original-title="Popover Title">Bottom</button> -->
+                
+                <div :data-bs-whatever="laneId" class="modal" id="editCardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Card ({{title}})</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div>
+                                    <label for="card-name" class="col-form-label">Max number of cards:</label>
+                                    <input type="text" class="form-control" id="max-card" v-model="maxCard">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="editCard()">Save</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             
             <div class="card-body">
                 <!-- "Add a Card" button -->
-                <button type="button" class="btn addCardBtn" :class="btnColor" data-bs-toggle="modal" data-bs-target="#addCardModal" @click="addNewCard(laneId)"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ms-1">Add a Card</span></button>
+                <button type="button" class="btn addCardBtn" :class="btnColor" data-bs-toggle="modal" data-bs-target="#addCardModal" @click="addNewCard()"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ms-1">Add a Card</span></button>
                 
                 <!-- Each Card Item -->
-                <draggable :options="{ group: 'default' }" v-model="draggableItems">
+                <draggable :options="{ group: 'default' }" v-model="draggableItems" :group="{put:ableToDrop}" @change="checkNumCards()">
                     <div v-for="item of items" :key="item.itemId">
                         <taskLaneItem :item="item" :laneId="laneId" :boardId="boardId"></taskLaneItem>
                     </div>
                 </draggable>
             </div>
-            
         </div>
 
+        <!-- Add a new card dialog -->
         <div :data-bs-whatever="laneId" class="modal" id="addCardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add a New Card</h5>
+                    <h5 class="modal-title">Add a New Card ({{title}})</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeNewCard()">
                     <span aria-hidden="true"></span>
                     </button>
@@ -70,12 +97,13 @@ export default ({
     },
 
 
-    props: ['items', 'title', 'laneId', 'bgColor', 'btnColor', 'boardId'],
+    props: ['maxCard', 'items', 'title', 'laneId', 'bgColor', 'btnColor', 'boardId'],
 
     data() {
         return {
             newCardTitle: '',
-            newCardDesc: ''
+            newCardDesc: '',
+            ableToDrop: true
         }
     },
 
@@ -96,9 +124,8 @@ export default ({
     },
 
     methods: {
-        addNewCard(laneId){
-            console.log(laneId)
-            console.log(this.laneDetails)
+        addNewCard(){
+            console.log(this.laneId)
         },
 
         createNewCard() {
@@ -116,6 +143,24 @@ export default ({
         closeNewCard(){
             this.newCardTitle = ''
             this.newCardDesc = ''
+        },
+
+        editCard(){
+            this.$store.commit('editCard', {
+                boardId: this.boardId,
+                laneId: this.laneId,
+                maxCard: this.maxCard
+            })
+        },
+
+        checkNumCards(){
+            console.log(this.laneId + ": " + this.items.length)
+            if(this.items.length == this.maxCard){
+                this.ableToDrop = false;
+            }
+            else{
+                this.ableToDrop = true;
+            }
         }
     }
 })
@@ -126,7 +171,7 @@ export default ({
     cursor: pointer;
 }
 
-.editCard:hover{
+.editCardClass:hover{
     cursor:pointer;
     background: rgba(0,0,0,0.1);
 }

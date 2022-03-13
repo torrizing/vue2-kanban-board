@@ -38,21 +38,20 @@ export default new Vuex.Store({
         }
       )
       console.log(state)
-
-      
     },
     
     addItem(state, item){
       console.log("Before:" , state)
-      console.log(item)
+      console.log(item.text.laneId)
       for(var eachBoard of state.allBoards.allBoardsList){
         if(eachBoard.boardId == item.text.boardId){
+          console.log(eachBoard.allItems[item.text.laneId].items)
           eachBoard.allItems[item.text.laneId].items.push({title: item.text.newCardTitle, description: item.text.newCardDesc, itemId: state.allBoards.nextId})
           state.allBoards.nextId += 1
           break; 
         }
       }
-      console.log("After:" , state)
+      console.log("After addItem:" , state)
     },
 
     updateItems(state, details){
@@ -104,6 +103,16 @@ export default new Vuex.Store({
           break;
         }
       }
+    },
+
+    editCard(state, item){
+      for(var eachBoard of state.allBoards.allBoardsList){
+        if(eachBoard.boardId == item.boardId){
+          eachBoard.allItems[item.laneId].maxCard = item.maxCard
+          break;
+        }
+      }
+      console.log(state)
     }
   }
 })
