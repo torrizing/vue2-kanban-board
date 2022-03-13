@@ -31,17 +31,21 @@
     <!-- Tasklanes -->
     <div class="row">
     
-        <div class="col">
+        <div class="col-lg-4 col-md-6 col-xs-12">
             <taskLane laneId="todo" title="To-Do" bgColor="bg-info" btnColor="btn-info" :items="allItems.todo.items" :maxCard="allItems.todo.maxCard" :boardId="boardId"></taskLane>
         </div>
 
-        <div class="col">
+        <div class="col-lg-4 col-md-6 col-xs-12">
             <taskLane laneId="progress" title="In Progress" bgColor="bg-warning" btnColor="btn-warning" :items="allItems.progress.items" :maxCard="allItems.progress.maxCard" :boardId="boardId"></taskLane>
         </div>
 
-        <div class="col">
+        <div class="col-lg-4 col-md-12 col-xs-12">
             <taskLane laneId="done" title="Done" bgColor="bg-primary" btnColor="btn-primary" :items="allItems.done.items" :maxCard="allItems.done.maxCard" :boardId="boardId"></taskLane>
         </div>
+
+        <!-- <div class="col" v-for="(value, key) in allItems" :key="key">
+            <taskLane :laneId="key" :title="value.cardTitle" bgColor="bg-primary" btnColor="btn-primary" :items="allItems[key].items" :maxCard="allItems.done.maxCard" :boardId="boardId"></taskLane>
+        </div> -->
 
     </div>
   </div>

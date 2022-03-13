@@ -36,6 +36,15 @@ export default new Vuex.Store({
             progress: {maxCard: 10, items: []}, 
             done: {maxCard: 10, items: []}}
         }
+        // {
+        //   boardId: item.text.boardId, 
+        //   boardName: item.text.boardName, 
+        //   boardDesc: item.text.boardDesc,
+        //   allItems: {
+        //     todo: {cardTitle: "To-Do", maxCard: 10, items: []}, 
+        //     progress: {cardTitle: "In Progress", maxCard: 10, items: []}, 
+        //     done: {cardTitle: "Done", maxCard: 10, items: []}}
+        // }
       )
       console.log(state)
     },

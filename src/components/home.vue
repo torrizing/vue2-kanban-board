@@ -17,9 +17,23 @@
       </div>
     </div>
 
+    <!-- Side Nav Bar (Bootstrap) -->
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">My Boards</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <p><span style="margin-left:auto;"> <font-awesome-icon class="addNewBoardIcon" icon="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#newBoardModal"/></span> Create a New Board</p>
+      </div>
+    </div>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
       <div class="container-fluid d-flex">
-      <button class="btn btn-info" type="submit" @click="openSideNav()"><font-awesome-icon icon="fa-solid fa-bars" /></button>
+      <!-- <button class="btn btn-info" type="submit" @click="openSideNav()"><font-awesome-icon icon="fa-solid fa-bars" /></button> -->
+
+      <button class="btn btn-info" type="submit" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop"><font-awesome-icon icon="fa-solid fa-bars" /></button>
 
       
         <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
