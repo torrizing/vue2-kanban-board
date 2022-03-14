@@ -21,7 +21,7 @@
                         <div class="modal-body">
                             <form>
                                 <div>
-                                    <label for="card-name" class="col-form-label">Max number of cards:</label>
+                                    <label for="card-name" class="col-form-label">Max number of cards<span color="#ff7851">*</span></label>
                                     <input type="text" class="form-control" id="max-card" v-model="maxCard">
                                 </div>
                             </form>
@@ -38,7 +38,8 @@
             
             <div class="card-body">
                 
-                <!-- "Add a Card" button -->
+                <!-- "Add a Card" button  -->
+                <!-- data-bs-toggle="modal" data-bs-target="#addCardModal"  -->
                 <button type="button" class="btn addCardBtn" :class="btnColor" data-bs-toggle="modal" data-bs-target="#addCardModal" @click="addNewCard()"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ms-1">Add a Card</span></button>
                 
                 <!-- Each Card Item -->
@@ -51,7 +52,7 @@
         </div>
 
         <!-- Add a new card dialog -->
-        <div class="modal" id="addCardModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal" id="addCardModal" v-show="showAddCard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -66,11 +67,11 @@
                     {{maxCard}}
                     <form>
                     <div class="mb-3">
-                        <label for="card-name" class="col-form-label">Title:</label>
+                        <label for="card-name" class="col-form-label">Title<span style="color:#ff7851">*</span></label>
                         <input type="text" class="form-control" id="board-name" v-model="newCardTitle">
                     </div>
                     <div class="mb-3">
-                        <label for="card-description" class="col-form-label">Description:</label>
+                        <label for="card-description" class="col-form-label">Description<span style="color:#ff7851">*</span></label>
                         <textarea class="form-control" id="card-description" v-model="newCardDesc"></textarea>
                     </div>
                     </form>
@@ -108,7 +109,8 @@ export default ({
         return {
             newCardTitle: '',
             newCardDesc: '',
-            ableToDrop: true
+            ableToDrop: true,
+            showAddCard: false
         }
     },
 

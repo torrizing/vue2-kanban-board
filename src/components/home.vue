@@ -21,11 +21,19 @@
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">My Boards</h5>
+        <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel"><strong>My Boards</strong></h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <p><span style="margin-left:auto;"> <font-awesome-icon class="addNewBoardIcon" icon="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#newBoardModal"/></span> Create a New Board</p>
+        <p>
+          <!-- <span style="margin-left:auto;"> <font-awesome-icon class="addNewBoardIcon" icon="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#newBoardModal"/></span> Create a New Board -->
+        
+          <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#newBoardModal"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ms-1">Create a New Board</span></button>
+        </p>
+
+        <div>
+          <div v-for="eachBoard of allBoardsList" :key="eachBoard.boardId" data-bs-dismiss="offcanvas" class="eachBoardClass mb-2" @click="accessBoard(eachBoard)">{{eachBoard.boardName}}</div>
+      </div>
       </div>
     </div>
 
@@ -39,30 +47,8 @@
         <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button> -->
-        <a class="navbar-brand" href="#">Vue-Board</a>
+        <span class="navbar-brand">Vue-Board</span>
 
-        <!-- <div class="collapse navbar-collapse" id="navbarColor01">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Home
-                <span class="visually-hidden">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input class="form-control me-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div> -->
       </div>
     </nav>  
 
@@ -78,18 +64,24 @@
           </div>
           <div class="modal-body">
             <form>
-              <div class="mb-3">
-                <label for="board-name" class="col-form-label">Name:</label>
-                <input type="text" class="form-control" id="board-name" v-model="newBoardName">
+              <div class="mb-3 form-group" :class="{ 'has-danger': isInvalid.boardName}">
+                <label for="board-name" class="col-form-label">Name<span style="color:#ff7851">*</span></label>
+                <input type="text" class="form-control" id="board-name" v-model="newBoardName"  :class="{ 'has-danger': isInvalid.boardName, 'is-invalid': isInvalid.boardName}" @change="checkNewBoardForm()">
+                <div class="invalid-feedback">Board name is required.</div>
               </div>
-              <div class="mb-3">
-                <label for="board-description" class="col-form-label">Description:</label>
-                <textarea class="form-control" id="board-description" v-model="newBoardDesc"></textarea>
+
+              <div class="mb-3 form-group" :class="{'has-danger': isInvalid.boardDesc}">
+                <label for="board-description" class="col-form-label">Description<span style="color:#ff7851">*</span></label>
+                <textarea class="form-control" :class="{'has-danger': isInvalid.boardDesc, 'is-invalid': isInvalid.boardDesc}" id="board-description" v-model="newBoardDesc" @change="checkNewBoardForm()"></textarea>
+                <div class="invalid-feedback">Board description is required.</div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="createNewBoard()">Create</button>
+            <!-- :data-bs-dismiss="modalName" -->
+            <button type="button" class="btn btn-primary" @click="createNewBoard()" v-if="validForm==false">Create</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="createNewBoard()" v-else-if="validForm">Create</button>
+
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="closeNewBoard()">Cancel</button>
           </div>
         </div>
@@ -125,7 +117,14 @@ export default {
       newBoardDesc: '',
       showSideNav: false,
       currBoardId: -1,
-      currBoard: {}
+      currBoard: {},
+      isInvalid: {
+        boardName: false,
+        boardDesc: false
+      },
+      // modalName: "modal",
+      // showModal: true,
+      validForm: false
     }
   },
 
@@ -142,6 +141,19 @@ export default {
       this.showSideNav = false;
     },
 
+    checkNewBoardForm(){
+      this.newBoardName = this.newBoardName.trim()
+      this.newBoardDesc = this.newBoardDesc.trim()
+
+      if(this.newBoardName.length == 0 || this.newBoardDesc.length == 0){
+        this.validForm = false
+      }
+      else{
+        this.validForm = true
+
+      }
+    },
+
     createNewBoard(){
       console.log(this.newBoardName)
       console.log(this.newBoardDesc)
@@ -149,25 +161,48 @@ export default {
       // var current = new Date();
       // console.log(current)
       // var newBoardId = current.getFullYear() + "/" + current.getMonth() + "/" + current.getDate() + ","
-      this.currBoardId += 1
       // this.allBoardsList.push({boardName: this.newBoardName, boardDesc: this.newBoardDesc, boardId: this.currBoardId})
       // console.log(this.allBoardsList)
+      this.newBoardName = this.newBoardName.trim()
+      this.newBoardDesc = this.newBoardDesc.trim()
 
-      if(this.newBoardName && this.newBoardDesc){
+      if(this.newBoardName.length == 0 && this.newBoardDesc.length == 0){
+        // this.modalName = ""
+        this.isInvalid.boardName = true
+        this.isInvalid.boardDesc = true
+      }
+      else if (this.newBoardName.length == 0){
+        this.isInvalid.boardName = true
+        this.isInvalid.boardDesc = false
+      }
+      else if (this.newBoardDesc.length == 0){
+        this.isInvalid.boardName = false
+        this.isInvalid.boardDesc = true
+      }
+      else{
+        // this.modalName = "modal"
+        this.isInvalid.boardName = false
+        this.isInvalid.boardDesc = false
+
+        this.currBoardId += 1
         this.$store.commit('addBoard', {
             text: {boardId: this.currBoardId, boardName: this.newBoardName, boardDesc: this.newBoardDesc},
         })
-      }
-      this.newBoardName = ''
-      this.newBoardDesc = ''
+        this.newBoardName = ''
+        this.newBoardDesc = ''
 
-      for(var board of this.allBoardsList){
-        if(board.boardId == this.currBoardId){
-          this.currBoard = board
-          break
-        } 
+        for(var board of this.allBoardsList){
+          if(board.boardId == this.currBoardId){
+            this.currBoard = board
+            break
+          } 
+        }
+        this.showSideNav = false
+        this.validForm = false
+
       }
-      this.showSideNav = false
+      console.log(this.isInvalid.boardName)
+      console.log(this.isInvalid.boardDesc)
 
     },
 
