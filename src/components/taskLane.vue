@@ -14,22 +14,24 @@
                         <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Edit Card ({{title}})</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" @click="cancelEditCard()" aria-label="Close">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" :disabled="disabledCloseEdit" aria-label="Close">
                                 <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <form>
-                                <div>
+                                <div class="form-group" :class="{ 'has-danger': maxCardInputInvalid}">
                                     <label for="card-name" class="col-form-label">Max number of cards<span color="#ff7851">*</span></label>
-                                    <input type="number" class="form-control" id="max-card" v-model="maxCardComputed">
+                                    <input type="number" class="form-control" :class="{ 'has-danger': maxCardInputInvalid, 'is-invalid': maxCardInputInvalid}" id="max-card" @change="checkEditCardInput()" v-model="maxCardComputed">
+                                    <div class="invalid-feedback">Max number of cards cannot be blank or less than 0.</div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <!--  @click="editCard()" -->
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="cancelEditCard()">Cancel</button>
+                            <p><em>Changes saved automatically.</em></p>
+                            <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="cancelEditCard()">Cancel</button> -->
                         </div>
                         </div>
                     </div>
@@ -124,9 +126,9 @@ export default ({
             // child: {
             //     maxCard: this.maxCard
             // }
-            oriMaxCard: this.maxCard,
             maxCardReached: false,
-            maxCardInputValid: true
+            maxCardInputInvalid: false,
+            disabledCloseEdit: false
         }
     },
 
@@ -161,8 +163,11 @@ export default ({
                     maxCard: maxCard
                     })
                 }
-                console.log("current maxCard:", this.maxCard)
-                return this.maxCard
+                else{
+                    this.maxCardInputInvalid = true
+                    this.disabledCloseEdit = true
+                }
+                
             }
         }
     },
@@ -263,8 +268,22 @@ export default ({
             }
         },
 
-        cancelEditCard(){
-            console.log(this.maxCardComputed)
+        // cancelEditCard(){
+        //     console.log(this.maxCardComputed)
+        // }
+
+        checkEditCardInput(){
+            console.log("checking")
+            if(this.maxCardComputed < 0 || this.maxCardComputed.length == 0){
+                console.log("checking if here")
+                this.maxCardInputInvalid = true
+                this.disabledCloseEdit = true
+            }
+            else{
+                console.log("checking else here")
+                this.maxCardInputInvalid = false
+                this.disabledCloseEdit = false
+            }
         }
     }
 })
