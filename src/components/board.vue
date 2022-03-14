@@ -82,7 +82,9 @@ export default {
   data () {
     return {
       isEditingBN: false,
-      isEditingBD: false
+      isEditingBD: false,
+      boardNameInvalid: false,
+      boardDescInvalid: false
     }
   },
 

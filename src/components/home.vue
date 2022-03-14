@@ -14,10 +14,10 @@
           <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#newBoardModal"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ms-1">Create a New Board</span></button>
         </p>
 
-        <div class="d-flex" style="justify-content:space-between">
+        <!-- <div class="d-flex" style="justify-content:space-between"> -->
           <div v-for="eachBoard of allBoardsList" :key="eachBoard.boardId" data-bs-dismiss="offcanvas" class="eachBoardClass mb-2" @click="accessBoard(eachBoard)">{{eachBoard.boardName}}</div>
           <!-- <font-awesome-icon @click="deleteBoard()" class="pb-2 deleteBoardIcon" icon="fa-solid fa-trash" color="lightcoral"/> -->
-      </div>
+      <!-- </div> -->
       </div>
     </div>
 

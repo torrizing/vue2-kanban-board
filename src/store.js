@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import localStoragePlugin from './plugins/localStorage';
+import localStoragePlugin from './plugins/localStorage';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  // plugins: [localStoragePlugin],
+  plugins: [localStoragePlugin],
 
   state: {
     allBoards: {
@@ -30,13 +30,13 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    // initializeStore() {
-    //   const data = localStorage.getItem('boardState');
+    initializeStore() {
+      const data = localStorage.getItem('boardState');
 
-    //   if (data) {
-    //     this.replaceState(Object.assign(this.state, JSON.parse(data)));
-    //   }
-    // },
+      if (data) {
+        this.replaceState(Object.assign(this.state, JSON.parse(data)));
+      }
+    },
 
     addBoard(state, item){
       console.log(item.text)
