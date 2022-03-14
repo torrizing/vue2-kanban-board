@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Side nav bar -->
-    <div id="sideNav" v-show="showSideNav">
+    <!-- <div id="sideNav" v-show="showSideNav">
       <div class="mb-2" style="text-align:right;">
         <font-awesome-icon class="closebtn" color="#ff7851" @click="closeSideNav()" icon="fa-solid fa-xmark" />
       </div>
@@ -15,7 +15,7 @@
       <div>
         <div v-for="eachBoard of allBoardsList" :key="eachBoard.boardId" class="eachBoardClass mb-2" @click="accessBoard(eachBoard)">{{eachBoard.boardName}}</div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Side Nav Bar (Bootstrap) -->
 
@@ -209,6 +209,9 @@ export default {
     closeNewBoard(){
       this.newBoardName = ''
       this.newBoardDesc = ''
+      this.validForm = false
+      this.isInvalid.boardName = false
+      this.isInvalid.boardDesc = false
     },
 
     accessBoard(eachBoard){

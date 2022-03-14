@@ -28,6 +28,7 @@ export default ({
                     laneId: this.laneId,
                     boardId: this.boardId
             });
+            this.$emit('deletedCard')
         }
     }
 })
