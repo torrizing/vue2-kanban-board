@@ -14,25 +14,42 @@
           <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#newBoardModal"><font-awesome-icon icon="fa-solid fa-plus" /><span class="ms-1">Create a New Board</span></button>
         </p>
 
-        <div>
+        <div class="d-flex" style="justify-content:space-between">
           <div v-for="eachBoard of allBoardsList" :key="eachBoard.boardId" data-bs-dismiss="offcanvas" class="eachBoardClass mb-2" @click="accessBoard(eachBoard)">{{eachBoard.boardName}}</div>
+          <!-- <font-awesome-icon @click="deleteBoard()" class="pb-2 deleteBoardIcon" icon="fa-solid fa-trash" color="lightcoral"/> -->
       </div>
       </div>
     </div>
 
+    <!-- Delete Board Dialog -->
+    <!-- <div class="delete-board-modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Are you sure you want to delete board ()?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="delete-board-modal" aria-label="Close">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="delete-board-modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <!-- Top Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
       <div class="container-fluid">
-      <!-- <button class="btn btn-info" type="submit" @click="openSideNav()"><font-awesome-icon icon="fa-solid fa-bars" /></button> -->
       <!-- <button @click="checkData()">Check allBoardsList</button> -->
 
       <button class="btn btn-info" type="submit" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop"><font-awesome-icon icon="fa-solid fa-bars" /></button>
 
-      
-        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button> -->
-        <span class="navbar-brand">Vue-Board</span>
+      <span class="navbar-brand">Vue-Board</span>
 
       </div>
     </nav>  
@@ -79,7 +96,6 @@
 
     <div v-else>
       <board :boardName="currBoard.boardName" :boardDesc="currBoard.boardDesc" :boardId="currBoard.boardId" :allItems="currBoard.allItems"></board>
-      <!-- {boardName: 'First Board', boardDesc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est dicta odit molestiae nihil neque. Veniam quas esse alias ipsam minus soluta assumenda similique exercitationem quae! Pariatur unde odio consectetur nemo.', boardId: -1} -->
     </div>
     
   </div>
@@ -106,8 +122,6 @@ export default {
         boardName: false,
         boardDesc: false
       },
-      // modalName: "modal",
-      // showModal: true,
       validForm: false
     }
   },
@@ -151,16 +165,10 @@ export default {
       console.log(this.newBoardName)
       console.log(this.newBoardDesc)
 
-      // var current = new Date();
-      // console.log(current)
-      // var newBoardId = current.getFullYear() + "/" + current.getMonth() + "/" + current.getDate() + ","
-      // this.allBoardsList.push({boardName: this.newBoardName, boardDesc: this.newBoardDesc, boardId: this.currBoardId})
-      // console.log(this.allBoardsList)
       this.newBoardName = this.newBoardName.trim()
       this.newBoardDesc = this.newBoardDesc.trim()
 
       if(this.newBoardName.length == 0 && this.newBoardDesc.length == 0){
-        // this.modalName = ""
         this.isInvalid.boardName = true
         this.isInvalid.boardDesc = true
       }
@@ -173,7 +181,6 @@ export default {
         this.isInvalid.boardDesc = true
       }
       else{
-        // this.modalName = "modal"
         this.isInvalid.boardName = false
         this.isInvalid.boardDesc = false
 
@@ -209,7 +216,6 @@ export default {
     accessBoard(eachBoard){
       console.log(eachBoard)
       this.currBoard = eachBoard
-      // this.closeSideNav()
     }
   }
 }
@@ -225,7 +231,7 @@ export default {
   color:#6cc3d5;
 }
 
-.addNewBoardIcon:hover, .closebtn:hover{
+.addNewBoardIcon:hover, .closebtn:hover, .deleteBoardIcon:hover{
   cursor: pointer;
 }
 
@@ -246,4 +252,5 @@ export default {
   cursor: pointer;
   color: #6cc3d5;
 }
+
 </style>

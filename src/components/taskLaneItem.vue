@@ -4,7 +4,7 @@
             <div class="card-block">
                 <div class="card-title p-3 mb-0">
                     <div class="d-flex" style="justify-content:space-between">
-                        <h6><strong>{{item.title}} {{laneId}}</strong></h6>
+                        <h6><strong>{{item.title}}</strong></h6>
                         <span><font-awesome-icon @click="deleteCard()" class="pb-2 deleteCardIcon" icon="fa-solid fa-trash" color="lightcoral"/></span>
                     </div>
                     <div>{{item.description}}</div>

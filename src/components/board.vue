@@ -40,7 +40,7 @@
             <span><font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBD" @click="editBoardDesc()" class="editBoardClass" /></span>
 
             <button type="button" class="btn btn-primary ms-1" v-if="isEditingBD" @click="stopEditBoardDesc()"><font-awesome-icon icon="fa-solid fa-check" class="editBoardClass" /></button>
-            <!-- <font-awesome-icon icon="fa-solid fa-check" v-if="isEditingBD" @click="stopEditBoardDesc()" class="editBoardClass" style="color:#78c2ad"/> -->
+          
         </span>
     </div>
     

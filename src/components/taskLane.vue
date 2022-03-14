@@ -30,8 +30,7 @@
                         <div class="modal-footer">
                             <!--  @click="editCard()" -->
                             <p><em>Changes saved automatically.</em></p>
-                            <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="cancelEditCard()">Cancel</button> -->
+                           
                         </div>
                         </div>
                     </div>
@@ -65,9 +64,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {{title}}
-                    {{laneId}}
-                    {{maxCard}}
                     <p class="text-danger" v-if="maxCardReached">Number of cards have reached the maximum. To add more cards in this lane, change the maximum number of cards it can hold.</p>
                     <form>
                         <div class="mb-3 form-group" :class="{ 'has-danger': isInvalid.cardTitle}">
@@ -117,15 +113,11 @@ export default ({
             newCardTitle: '',
             newCardDesc: '',
             ableToDrop: true,
-            // showAddCard: false,
             isInvalid: {
                 cardTitle: false,
                 cardDesc: false
             },
             validForm: false,
-            // child: {
-            //     maxCard: this.maxCard
-            // }
             maxCardReached: false,
             maxCardInputInvalid: false,
             disabledCloseEdit: false
@@ -213,17 +205,6 @@ export default ({
                 this.newCardDesc = ''
                 this.validForm = false
             }
-
-            // if (this.newCardTitle && this.newCardDesc) {
-            //     console.log(this.boardId)
-            //     console.log("createNewCard: ", this.laneId)
-
-            //     this.$store.commit('addItem', {
-            //         text: {boardId: this.boardId, laneId: this.laneId, newCardTitle: this.newCardTitle, newCardDesc: this.newCardDesc},
-            //     })
-            // }
-            // this.newCardTitle = ''
-            // this.newCardDesc = ''
         
         },
 
@@ -234,14 +215,6 @@ export default ({
             this.isInvalid.cardTitle = false
             this.isInvalid.cardDesc = false
         },
-
-        // editCard(){
-        //     this.$store.commit('editCard', {
-        //         boardId: this.boardId,
-        //         laneId: this.laneId,
-        //         maxCard: this.child.maxCard
-        //     })
-        // },
 
         checkNumCards(){
             console.log(this.laneId + ": " + this.items.length)
@@ -267,10 +240,6 @@ export default ({
 
             }
         },
-
-        // cancelEditCard(){
-        //     console.log(this.maxCardComputed)
-        // }
 
         checkEditCardInput(){
             console.log("checking")
