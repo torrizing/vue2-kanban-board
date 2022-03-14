@@ -1,23 +1,6 @@
 <template>
   <div>
-    <!-- Side nav bar -->
-    <!-- <div id="sideNav" v-show="showSideNav">
-      <div class="mb-2" style="text-align:right;">
-        <font-awesome-icon class="closebtn" color="#ff7851" @click="closeSideNav()" icon="fa-solid fa-xmark" />
-      </div>
-      
-      <div style="display:flex;" class="mb-3">
-        <span><strong>My Boards</strong></span>
-        
-        <span style="margin-left:auto;"> <font-awesome-icon class="addNewBoardIcon" icon="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#newBoardModal"/></span>
-      </div>
-
-      <div>
-        <div v-for="eachBoard of allBoardsList" :key="eachBoard.boardId" class="eachBoardClass mb-2" @click="accessBoard(eachBoard)">{{eachBoard.boardName}}</div>
-      </div>
-    </div> -->
-
-    <!-- Side Nav Bar (Bootstrap) -->
+    <!-- Side Nav Bar -->
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
       <div class="offcanvas-header">
@@ -37,9 +20,11 @@
       </div>
     </div>
 
+    <!-- Top Nav Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-info">
-      <div class="container-fluid d-flex">
+      <div class="container-fluid">
       <!-- <button class="btn btn-info" type="submit" @click="openSideNav()"><font-awesome-icon icon="fa-solid fa-bars" /></button> -->
+      <!-- <button @click="checkData()">Check allBoardsList</button> -->
 
       <button class="btn btn-info" type="submit" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop"><font-awesome-icon icon="fa-solid fa-bars" /></button>
 
@@ -115,8 +100,7 @@ export default {
     return {
       newBoardName: '',
       newBoardDesc: '',
-      showSideNav: false,
-      currBoardId: -1,
+      // accessBoardId: 0,
       currBoard: {},
       isInvalid: {
         boardName: false,
@@ -128,17 +112,26 @@ export default {
     }
   },
 
+  created() {
+    if(this.allBoardsList.length > 0){
+      this.currBoard = this.allBoardsList[0]
+    }
+  },
+
   computed: mapState({
-    allBoardsList: s => s.allBoards.allBoardsList
+    allBoardsList: s => s.allBoards.allBoardsList,
+    currBoardId: s => s.allBoards.currBoardId,
+    nextBoardId: s => s.allBoards.nextBoardId
+    // currBoard: s => s.allBoards.currBoard
   }),
 
   methods: {
-    openSideNav(){
-      this.showSideNav = true;
-    },
+    checkData(){
+      console.log("allBoardsList:", this.allBoardsList)
+      // console.log("accessBoardId:", this.accessBoardId)
+      console.log("currBoardId:", this.currBoardId)
+      console.log("currentBoard:", this.currBoard)
 
-    closeSideNav(){
-      this.showSideNav = false;
     },
 
     checkNewBoardForm(){
@@ -184,10 +177,10 @@ export default {
         this.isInvalid.boardName = false
         this.isInvalid.boardDesc = false
 
-        this.currBoardId += 1
         this.$store.commit('addBoard', {
-            text: {boardId: this.currBoardId, boardName: this.newBoardName, boardDesc: this.newBoardDesc},
+          text: {boardId: this.nextBoardId, boardName: this.newBoardName, boardDesc: this.newBoardDesc},
         })
+        // this.accessBoardId = this.currBoardId
         this.newBoardName = ''
         this.newBoardDesc = ''
 
@@ -197,7 +190,6 @@ export default {
             break
           } 
         }
-        this.showSideNav = false
         this.validForm = false
 
       }
@@ -217,7 +209,7 @@ export default {
     accessBoard(eachBoard){
       console.log(eachBoard)
       this.currBoard = eachBoard
-      this.closeSideNav()
+      // this.closeSideNav()
     }
   }
 }

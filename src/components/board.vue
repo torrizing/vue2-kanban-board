@@ -2,29 +2,45 @@
   <div class="m-4">
 
     <!-- Board Name -->
-    <div class="d-flex">
+    <div class="d-flex mb-3">
         <span>
-            <h2 class="boardNameClass" v-if="!isEditingBN"><strong>{{boardName}}</strong></h2>
-            <input v-if="isEditingBN" v-model="boardName" type="text" class="form-control" style="display: inline-block;" @keydown.enter="stopEditBoardName">
-            <span class="input" role="textbox"></span>
+            <h2 class="boardNameClass" v-if="!isEditingBN"><strong>{{boardNameComputed}}</strong></h2>
+            <form>
+              <div class="form-group" :class="{ 'has-danger': boardNameInvalid}">
+                <input v-if="isEditingBN" v-model="boardNameComputed" type="text" class="form-control" :class="{ 'has-danger': boardNameInvalid, 'is-invalid': boardNameInvalid}" style="display: inline-block;" @keydown.enter="stopEditBoardName()">
+                <div class="invalid-feedback">Board name cannot be empty.</div>
+              </div>
+            </form>
+            <!-- <span class="input" role="textbox"></span> -->
         </span>
 
-        <span class="mt-2 ms-3">
-            <font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBN" @click="editBoardName()" class="editBoardClass" />
-            <font-awesome-icon icon="fa-solid fa-check"  v-if="isEditingBN" @click="stopEditBoardName()" class="editBoardClass" style="color:#78c2ad"/>
+        <span>
+            <font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBN" @click="editBoardName()" class="editBoardClass mt-2 ms-3" />
+
+            <button type="button" class="btn btn-primary ms-1" v-if="isEditingBN" @click="stopEditBoardName()"><font-awesome-icon icon="fa-solid fa-check" class="editBoardClass" /></button>
+            <!-- <font-awesome-icon icon="fa-solid fa-check"  v-if="isEditingBN" @click="stopEditBoardName()" class="editBoardClass" style="color:#78c2ad"/> -->
         </span>
     </div>
 
     <!-- Board Description -->
     <div class="d-flex mb-3">
-      <span>
-          <div class="boardNameClass" v-if="!isEditingBD">{{boardDesc}}</div>
-          <textarea v-if="isEditingBD" v-model="boardDesc" class="form-control" @keydown.enter="stopEditBoardDesc()"></textarea>
+      <span class="flex-grow-1">
+          <div class="boardNameClass" v-if="!isEditingBD">{{boardDescComputed}}</div>
+
+          <form>
+            <div class="form-group" :class="{ 'has-danger': boardDescInvalid}">
+              <!-- <textarea v-if="isEditingBD" v-model="boardDescComputed" class="form-control" :class="{ 'has-danger': boardDescInvalid, 'is-invalid': boardDescInvalid}" @keydown.enter="stopEditBoardDesc()"></textarea> -->
+              <input type="text" v-if="isEditingBD" v-model="boardDescComputed" class="form-control" :class="{ 'has-danger': boardDescInvalid, 'is-invalid': boardDescInvalid}" @keydown.enter="stopEditBoardDesc()">
+              <div class="invalid-feedback">Board description cannot be empty.</div>
+            </div>
+          </form>
       </span>
 
-      <span class="ms-3">
+      <span>
             <span><font-awesome-icon icon="fa-solid fa-pen" v-if="!isEditingBD" @click="editBoardDesc()" class="editBoardClass" /></span>
-            <font-awesome-icon icon="fa-solid fa-check" v-if="isEditingBD" @click="stopEditBoardDesc()" class="editBoardClass" style="color:#78c2ad"/>
+
+            <button type="button" class="btn btn-primary ms-1" v-if="isEditingBD" @click="stopEditBoardDesc()"><font-awesome-icon icon="fa-solid fa-check" class="editBoardClass" /></button>
+            <!-- <font-awesome-icon icon="fa-solid fa-check" v-if="isEditingBD" @click="stopEditBoardDesc()" class="editBoardClass" style="color:#78c2ad"/> -->
         </span>
     </div>
     
@@ -66,29 +82,46 @@ export default {
   data () {
     return {
       isEditingBN: false,
-      isEditingBD: false,
-      // todoItems: [{title:'Cook', description:'2 pax dinner'},
-      // {title:'Clean', description:'Sweep the floor'}],
-      // todoItems: [],
-      // progressItems: [],
-      // doneItems: []
+      isEditingBD: false
     }
   },
 
-  // computed: {
-  //   boardName: {
-  //     get(){
-  //       this.boardName
-  //     },
-  //     set(boardName) {
-  //       console.log(boardName)
-  //       this.$store.commit('editBoardName', {
-  //           text: {boardId: this.boardId, boardName: this.boardName}
-  //       });
-  //     }
-  //   }
+  computed: {
+    boardNameComputed: {
+      get(){
+        return this.boardName
+      },
+      set(boardName) {
+        // console.log(boardName)
+        if(boardName.length > 0){
+          this.$store.commit('editBoardName', {
+              text: {boardId: this.boardId, boardName: boardName}
+          });
+        }
+        else{
+          this.boardNameInvalid = true
+        }
+      }
+    },
 
-  // },
+    boardDescComputed: {
+      get(){
+        return this.boardDesc
+      },
+      set(boardDesc) {
+        // console.log(boardName)
+        if(boardDesc.length > 0){
+          this.$store.commit('editBoardDesc', {
+              text: {boardId: this.boardId, boardDesc: boardDesc}
+          });
+        }
+        else{
+          this.boardDescInvalid = true
+        }
+      }
+    }
+
+  },
 
   methods: {
 
@@ -98,9 +131,9 @@ export default {
 
     stopEditBoardName() {
       this.isEditingBN = false
-      this.$store.commit('editBoardName', {
-          text: {boardId: this.boardId, boardName: this.boardName}
-      })
+      // this.$store.commit('editBoardName', {
+      //     text: {boardId: this.boardId, boardName: this.boardNameComputed}
+      // })
     },
 
     editBoardDesc() {
@@ -109,9 +142,9 @@ export default {
 
     stopEditBoardDesc() {
       this.isEditingBD = false
-      this.$store.commit('editBoardDesc', {
-        text: {boardId: this.boardId, boardDesc: this.boardDesc}
-      })
+      // this.$store.commit('editBoardDesc', {
+      //   text: {boardId: this.boardId, boardDesc: this.boardDesc}
+      // })
     }
   }
 }
@@ -122,6 +155,14 @@ export default {
 .editBoardClass:hover {
     /* background-color: rgb(223, 243, 245); */
     cursor: pointer; 
+}
+
+.boardNameClass{
+  /* word-wrap: break-word; */
+  /* text-overflow: ellipsis; */
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 </style>

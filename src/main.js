@@ -22,5 +22,9 @@ new Vue({
   components: { 
     App
    },
-  template: '<App/>'
+  template: '<App/>',
+
+  // created() {
+  //   store.commit('initializeStore');
+  // }
 })

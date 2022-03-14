@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import localStoragePlugin from './plugins/localStorage';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  // plugins: [localStoragePlugin],
+
   state: {
     allBoards: {
         
@@ -18,11 +21,23 @@ export default new Vuex.Store({
           //     done: {maxCard: 5, items: [{title: '', description: '', itemId: -1}]}}
           // }
         ],
-        nextId: 0
+        nextId: 0,
+        nextBoardId: 0,
+        currBoardId: -1
+        // cuurBoard: {}
+
     }
   },
 
   mutations: {
+    // initializeStore() {
+    //   const data = localStorage.getItem('boardState');
+
+    //   if (data) {
+    //     this.replaceState(Object.assign(this.state, JSON.parse(data)));
+    //   }
+    // },
+
     addBoard(state, item){
       console.log(item.text)
 
@@ -46,6 +61,8 @@ export default new Vuex.Store({
         //     done: {cardTitle: "Done", maxCard: 10, items: []}}
         // }
       )
+      state.allBoards.currBoardId = state.allBoards.nextBoardId
+      state.allBoards.nextBoardId += 1
       console.log(state)
     },
     
